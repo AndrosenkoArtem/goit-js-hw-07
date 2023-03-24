@@ -20,8 +20,8 @@ function createGaleryEl(galleryElements) {
     .join('');
 }
 function onGaleryElClick(e) {
+  e.preventDefault();
   createModalWindow(e);
-  linkBLocking(e);
 }
 function createModalWindow(e) {
   if (e.target.classList.value !== 'gallery__image') {
@@ -35,13 +35,22 @@ function createModalWindow(e) {
         <img src='${urlBigPicture}' alt ='${altBigPicture}'></img>
     </div>
 `,
-    {},
+    {
+      onShow: instance => {
+        window.addEventListener('keydown', onCloseModalOnEscBtn);
+        function onCloseModalOnEscBtn(e) {
+          if (e.code === 'Escape') {
+            instance.close();
+          }
+          if (instance.visible() === false) {
+            window.removeEventListener('keydown', onCloseModalOnEscBtn);
+          }
+        }
+      },
+    },
   );
 
   instance.show();
-}
-function linkBLocking(e) {
-  e.preventDefault();
 }
 galleryRef.insertAdjacentHTML('beforeend', createGaleryEl(galleryItems));
 

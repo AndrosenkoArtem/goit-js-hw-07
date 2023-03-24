@@ -14,28 +14,10 @@ function createGaleryEl(galleryElements) {
     })
     .join('');
 }
-function onGaleryElClick(e) {
-  createModalWindow(e);
-  validClick(e);
-  linkBLocking(e);
-}
-function validClick(e) {
-  if (e.target.classList.value !== 'gallery__image') {
-    return;
-  }
-}
-function linkBLocking(e) {
-  e.preventDefault();
-}
-function createModalWindow(e) {
-  var lightbox = new SimpleLightbox('.gallery a', {
-    /* options */
-    captionDelay: '250',
-  });
-}
+
 galleryRef.insertAdjacentHTML('beforeend', createGaleryEl(galleryItems));
 
-galleryRef.addEventListener('click', onGaleryElClick);
-
-{
-}
+new SimpleLightbox('.gallery a', {
+  /* options */
+  captionDelay: '250',
+});
